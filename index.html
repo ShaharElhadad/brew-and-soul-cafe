@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brew & Soul | קפה בוטיק</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --coffee: #2C1810;
+            --cream: #F5F0EB;
+            --gold: #C8A97E;
+            --gold-light: #E8D5B7;
+            --espresso: #1A0E08;
+            --milk: #FEFCFA;
+            --accent: #8B4513;
+            --text: #3D2B1F;
+            --text-light: #7A6558;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background: var(--milk);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* NAV */
+        .nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 100;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.4s, backdrop-filter 0.4s, padding 0.4s;
+        }
+
+        .nav.scrolled {
+            background: rgba(254, 252, 250, 0.92);
+            backdrop-filter: blur(20px);
+            padding: 14px 60px;
+            box-shadow: 0 2px 30px rgba(44, 24, 16, 0.08);
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--coffee);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-cta {
+            background: var(--coffee);
+            color: var(--cream) !important;
+            padding: 10px 28px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: transform 0.3s, box-shadow 0.3s !important;
+        }
+
+        .nav-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(44, 24, 16, 0.3);
+        }
+
+        .nav-cta::after { display: none !important; }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--espresso);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #1A0E08 0%, #2C1810 40%, #3D2B1F 100%);
+        }
+
+        .hero-grain {
+            position: absolute;
+            inset: 0;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        .hero-particles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            padding: 0 40px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 24px;
+            border: 1px solid var(--gold);
+            border-radius: 30px;
+            color: var(--gold);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(48px, 8vw, 96px);
+            color: var(--cream);
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero-title .gold { color: var(--gold); }
+
+        .hero-subtitle {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--gold-light);
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto 48px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 40px;
+            background: var(--gold);
+            color: var(--espresso);
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: 'Heebo', sans-serif;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(200, 169, 126, 0.4);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 40px;
+            background: transparent;
+            color: var(--cream);
+            border: 1px solid rgba(245, 240, 235, 0.3);
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 500;
+            font-family: 'Heebo', sans-serif;
+            cursor: pointer;
+            transition: border-color 0.3s, background 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--gold);
+            background: rgba(200, 169, 126, 0.1);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--gold-light);
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+        }
+
+        /* ABOUT */
+        .about {
+            padding: 140px 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .about-image-wrapper {
+            position: relative;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 600px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .about-image-inner {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-image-icon {
+            width: 200px;
+            height: 200px;
+        }
+
+        .about-float-card {
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            background: var(--coffee);
+            color: var(--cream);
+            padding: 24px 32px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-float-card .number {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            color: var(--gold);
+        }
+
+        .about-float-card .label {
+            font-size: 14px;
+            color: var(--gold-light);
+        }
+
+        .about-tag {
+            display: inline-block;
+            padding: 6px 18px;
+            background: rgba(200, 169, 126, 0.15);
+            color: var(--gold);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .about-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(32px, 4vw, 48px);
+            color: var(--coffee);
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .about-text {
+            font-size: 17px;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .about-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            background: var(--cream);
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .about-feature-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(200, 169, 126, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* STATS */
+        .stats {
+            background: var(--coffee);
+            padding: 80px 60px;
+        }
+
+        .stats-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+
+        .stat-suffix {
+            font-size: 32px;
+            color: var(--gold-light);
+        }
+
+        .stat-label {
+            font-size: 15px;
+            color: var(--gold-light);
+            font-weight: 300;
+        }
+
+        /* MENU */
+        .menu {
+            padding: 140px 60px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 6px 18px;
+            background: rgba(200, 169, 126, 0.15);
+            color: var(--gold);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(32px, 4vw, 52px);
+            color: var(--coffee);
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: 17px;
+            color: var(--text-light);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(44, 24, 16, 0.06);
+            transition: transform 0.4s, box-shadow 0.4s;
+            cursor: pointer;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(44, 24, 16, 0.12);
+        }
+
+        .menu-card-image {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-card-image-inner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.6s;
+        }
+
+        .menu-card:hover .menu-card-image-inner {
+            transform: scale(1.08);
+        }
+
+        .menu-card-image-inner svg {
+            width: 80px;
+            height: 80px;
+        }
+
+        .card-color-1 .menu-card-image-inner { background: linear-gradient(135deg, #D4A574 0%, #8B5E3C 100%); }
+        .card-color-2 .menu-card-image-inner { background: linear-gradient(135deg, #A8D8A8 0%, #5B8C5A 100%); }
+        .card-color-3 .menu-card-image-inner { background: linear-gradient(135deg, #E8C8A0 0%, #C8A060 100%); }
+        .card-color-4 .menu-card-image-inner { background: linear-gradient(135deg, #C8B0D0 0%, #8B6B9C 100%); }
+        .card-color-5 .menu-card-image-inner { background: linear-gradient(135deg, #F0C8C0 0%, #C88878 100%); }
+        .card-color-6 .menu-card-image-inner { background: linear-gradient(135deg, #B0D8E8 0%, #6098B0 100%); }
+
+        .menu-card-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--gold);
+            color: var(--espresso);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .menu-card-body {
+            padding: 24px;
+        }
+
+        .menu-card-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            color: var(--coffee);
+            margin-bottom: 8px;
+        }
+
+        .menu-card-desc {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .menu-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-card-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--coffee);
+        }
+
+        .menu-card-price span { font-size: 14px; color: var(--text-light); font-weight: 400; }
+
+        .menu-card-order {
+            width: 40px;
+            height: 40px;
+            background: var(--cream);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .menu-card-order:hover {
+            background: var(--gold);
+            transform: scale(1.1);
+        }
+
+        /* EXPERIENCE */
+        .experience {
+            padding: 140px 60px;
+            background: var(--cream);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .exp-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 70px;
+        }
+
+        .exp-card {
+            background: white;
+            padding: 48px 36px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s;
+        }
+
+        .exp-card:hover { transform: translateY(-6px); }
+
+        .exp-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        .exp-card:hover::before { transform: scaleX(1); }
+
+        .exp-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 24px;
+            background: rgba(200, 169, 126, 0.12);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .exp-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--coffee);
+            margin-bottom: 12px;
+        }
+
+        .exp-text {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* TESTIMONIALS */
+        .testimonials {
+            padding: 140px 60px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 70px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 36px;
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(44, 24, 16, 0.06);
+            position: relative;
+        }
+
+        .testimonial-stars {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-text {
+            font-size: 16px;
+            color: var(--text);
+            line-height: 1.7;
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .testimonial-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+        }
+
+        .avatar-1 { background: linear-gradient(135deg, #C8A97E, #8B5E3C); }
+        .avatar-2 { background: linear-gradient(135deg, #6098B0, #3D6B80); }
+        .avatar-3 { background: linear-gradient(135deg, #8B6B9C, #5C3D6E); }
+
+        .testimonial-name {
+            font-weight: 700;
+            color: var(--coffee);
+            font-size: 15px;
+        }
+
+        .testimonial-role {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .testimonial-quote {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            color: rgba(200, 169, 126, 0.15);
+            line-height: 1;
+        }
+
+        /* CTA */
+        .cta {
+            padding: 140px 60px;
+            background: var(--espresso);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-bg-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.03;
+            background-image: radial-gradient(circle at 20% 50%, var(--gold) 1px, transparent 1px),
+                              radial-gradient(circle at 80% 20%, var(--gold) 1px, transparent 1px),
+                              radial-gradient(circle at 60% 80%, var(--gold) 1px, transparent 1px);
+            background-size: 60px 60px, 80px 80px, 70px 70px;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(36px, 5vw, 56px);
+            color: var(--cream);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .cta-text {
+            font-size: 18px;
+            color: var(--gold-light);
+            margin-bottom: 40px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .cta-form {
+            display: flex;
+            gap: 12px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .cta-input {
+            flex: 1;
+            padding: 16px 24px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(200, 169, 126, 0.3);
+            border-radius: 50px;
+            color: var(--cream);
+            font-size: 15px;
+            font-family: 'Heebo', sans-serif;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .cta-input::placeholder { color: rgba(200, 169, 126, 0.5); }
+        .cta-input:focus { border-color: var(--gold); }
+
+        .cta-submit {
+            padding: 16px 36px;
+            background: var(--gold);
+            color: var(--espresso);
+            border: none;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 700;
+            font-family: 'Heebo', sans-serif;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            white-space: nowrap;
+        }
+
+        .cta-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(200, 169, 126, 0.4);
+        }
+
+        /* FOOTER */
+        .footer {
+            background: var(--coffee);
+            padding: 60px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--cream);
+            margin-bottom: 16px;
+        }
+
+        .footer-desc {
+            font-size: 14px;
+            color: var(--gold-light);
+            line-height: 1.7;
+            max-width: 300px;
+        }
+
+        .footer-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--cream);
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-links a {
+            color: var(--gold-light);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover { color: var(--gold); }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding-top: 30px;
+            border-top: 1px solid rgba(200, 169, 126, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copy {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-social {
+            width: 40px;
+            height: 40px;
+            background: rgba(200, 169, 126, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+
+        .footer-social:hover {
+            background: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .about { grid-template-columns: 1fr; gap: 40px; }
+            .menu-grid { grid-template-columns: repeat(2, 1fr); }
+            .stats-inner { grid-template-columns: repeat(2, 1fr); }
+            .exp-grid { grid-template-columns: repeat(2, 1fr); }
+            .testimonial-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-inner { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .nav { padding: 16px 24px; }
+            .nav.scrolled { padding: 12px 24px; }
+            .nav-links { display: none; }
+            .hero-content { padding: 0 24px; }
+            .about, .menu, .experience, .testimonials, .cta { padding: 80px 24px; }
+            .stats { padding: 60px 24px; }
+            .menu-grid { grid-template-columns: 1fr; }
+            .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            .exp-grid { grid-template-columns: 1fr; }
+            .testimonial-grid { grid-template-columns: 1fr; }
+            .footer { padding: 40px 24px; }
+            .footer-inner { grid-template-columns: 1fr; gap: 30px; }
+            .cta-form { flex-direction: column; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav class="nav" id="nav">
+        <a href="#" class="nav-logo">Brew & Soul</a>
+        <ul class="nav-links">
+            <li><a href="#about">הסיפור שלנו</a></li>
+            <li><a href="#menu">תפריט</a></li>
+            <li><a href="#experience">חוויה</a></li>
+            <li><a href="#testimonials">לקוחות</a></li>
+            <li><a href="#cta" class="nav-cta">הזמנת שולחן</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-grain"></div>
+        <div class="hero-particles" id="particles"></div>
+        <div class="hero-content">
+            <div class="hero-badge">EST. 2019 | תל אביב</div>
+            <h1 class="hero-title">
+                קפה שמספר<br><span class="gold">סיפור</span>
+            </h1>
+            <p class="hero-subtitle">
+                כל כוס אצלנו היא מסע של טעמים. פולים שנבחרו בקפידה,
+                קלייה מקומית, ואווירה שגורמת לך לרצות להישאר עוד קצת.
+            </p>
+            <div class="hero-buttons">
+                <a href="#menu" class="btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                    גלו את התפריט
+                </a>
+                <a href="#cta" class="btn-secondary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    הזמנת מקום
+                </a>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <span>גללו למטה</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+        <div class="about-image-wrapper">
+            <div class="about-image">
+                <div class="about-image-inner">
+                    <svg class="about-image-icon" viewBox="0 0 200 200" fill="none">
+                        <circle cx="100" cy="100" r="80" fill="rgba(44,24,16,0.15)"/>
+                        <path d="M60 120 C60 90, 80 70, 100 70 C120 70, 140 90, 140 120 L140 130 C140 135, 136 140, 130 140 L70 140 C64 140, 60 135, 60 130Z" fill="rgba(44,24,16,0.3)"/>
+                        <path d="M140 95 L155 90 C162 88, 168 94, 165 100 L155 115 C152 120, 145 118, 140 115" fill="rgba(44,24,16,0.2)"/>
+                        <path d="M80 60 C80 55, 82 50, 85 48" stroke="rgba(200,169,126,0.6)" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M100 55 C100 48, 103 42, 107 40" stroke="rgba(200,169,126,0.6)" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M120 60 C120 55, 122 50, 125 48" stroke="rgba(200,169,126,0.6)" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="about-float-card">
+                <div class="number">7+</div>
+                <div class="label">שנות ניסיון בקלייה</div>
+            </div>
+        </div>
+        <div class="about-content">
+            <span class="about-tag">הסיפור שלנו</span>
+            <h2 class="about-title">יותר מסתם<br>בית קפה</h2>
+            <p class="about-text">
+                התחלנו ב-2019 מחלום פשוט: ליצור מקום שבו הקפה הוא לא רק משקה,
+                אלא חוויה. כל פול נבחר בעצמנו, הקלייה מתבצעת כאן, והברמנים שלנו
+                עוברים הכשרה של 6 חודשים לפני שהם מגישים את הכוס הראשונה.
+            </p>
+            <div class="about-features">
+                <div class="about-feature">
+                    <div class="about-feature-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    קלייה מקומית
+                </div>
+                <div class="about-feature">
+                    <div class="about-feature-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                    </div>
+                    אווירה ביתית
+                </div>
+                <div class="about-feature">
+                    <div class="about-feature-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    צוות מקצועי
+                </div>
+                <div class="about-feature">
+                    <div class="about-feature-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    </div>
+                    חומרי גלם פרימיום
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats" id="stats">
+        <div class="stats-inner">
+            <div class="stat-item">
+                <div class="stat-number"><span class="counter" data-target="12500">0</span><span class="stat-suffix">+</span></div>
+                <div class="stat-label">כוסות קפה בחודש</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number"><span class="counter" data-target="98">0</span><span class="stat-suffix">%</span></div>
+                <div class="stat-label">שביעות רצון</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number"><span class="counter" data-target="15">0</span></div>
+                <div class="stat-label">סוגי פולים</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number"><span class="counter" data-target="7">0</span></div>
+                <div class="stat-label">שנים של קלייה</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENU -->
+    <section class="menu" id="menu">
+        <div class="section-header">
+            <span class="section-tag">התפריט שלנו</span>
+            <h2 class="section-title">נבחרת הכוכבים</h2>
+            <p class="section-subtitle">המשקאות הפופולריים ביותר שלנו, מוכנים עם אהבה ומקצועיות</p>
+        </div>
+        <div class="menu-grid">
+            <div class="menu-card card-color-1">
+                <div class="menu-card-image">
+                    <div class="menu-card-image-inner">
+                        <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="30" fill="rgba(255,255,255,0.3)"/><path d="M25 50 C25 35, 32 25, 40 25 C48 25, 55 35, 55 50 L55 55 C55 57, 53 58, 50 58 L30 58 C27 58, 25 57, 25 55Z" fill="rgba(255,255,255,0.5)"/></svg>
+                    </div>
+                    <span class="menu-card-badge">הכי נמכר</span>
+                </div>
+                <div class="menu-card-body">
+                    <h3 class="menu-card-name">אספרסו קלאסי</h3>
+                    <p class="menu-card-desc">שוט כפול עם קרמה מושלמת, פולי ברזיל בקלייה בינונית</p>
+                    <div class="menu-card-footer">
+                        <div class="menu-card-price">12<span> ש"ח</span></div>
+                        <button class="menu-card-order"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2C1810" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card card-color-2">
+                <div class="menu-card-image">
+                    <div class="menu-card-image-inner">
+                        <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="30" fill="rgba(255,255,255,0.3)"/><rect x="25" y="28" width="30" height="30" rx="4" fill="rgba(255,255,255,0.5)"/><circle cx="40" cy="22" r="8" fill="rgba(255,255,255,0.4)"/></svg>
+                    </div>
+                </div>
+                <div class="menu-card-body">
+                    <h3 class="menu-card-name">מאצ׳ה לאטה</h3>
+                    <p class="menu-card-desc">מאצ׳ה יפנית אותנטית עם חלב שיבולת שועל מוקצף</p>
+                    <div class="menu-card-footer">
+                        <div class="menu-card-price">22<span> ש"ח</span></div>
+                        <button class="menu-card-order"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2C1810" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card card-color-3">
+                <div class="menu-card-image">
+                    <div class="menu-card-image-inner">
+                        <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="30" fill="rgba(255,255,255,0.3)"/><path d="M28 55 L28 30 C28 26, 32 22, 40 22 C48 22, 52 26, 52 30 L52 55" fill="rgba(255,255,255,0.5)"/><ellipse cx="40" cy="55" rx="14" ry="4" fill="rgba(255,255,255,0.4)"/></svg>
+                    </div>
+                </div>
+                <div class="menu-card-body">
+                    <h3 class="menu-card-name">קפה קר מיוחד</h3>
+                    <p class="menu-card-desc">Cold brew 24 שעות עם וניל מדגסקר ומעט קרמל</p>
+                    <div class="menu-card-footer">
+                        <div class="menu-card-price">26<span> ש"ח</span></div>
+                        <button class="menu-card-order"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2C1810" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card card-color-4">
+                <div class="menu-card-image">
+                    <div class="menu-card-image-inner">
+                        <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="30" fill="rgba(255,255,255,0.3)"/><path d="M30 50 Q40 20 50 50 Z" fill="rgba(255,255,255,0.5)"/><circle cx="40" cy="32" r="6" fill="rgba(255,255,255,0.3)"/></svg>
+                    </div>
+                    <span class="menu-card-badge">חדש!</span>
+                </div>
+                <div class="menu-card-body">
+                    <h3 class="menu-card-name">לוונדר לאטה</h3>
+                    <p class="menu-card-desc">תמצית לוונדר צרפתית עם חלב מוקצף ומגע דבש</p>
+                    <div class="menu-card-footer">
+                        <div class="menu-card-price">24<span> ש"ח</span></div>
+                        <button class="menu-card-order"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2C1810" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card card-color-5">
+                <div class="menu-card-image">
+                    <div class="menu-card-image-inner">
+                        <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="30" fill="rgba(255,255,255,0.3)"/><rect x="28" y="25" width="24" height="32" rx="12" fill="rgba(255,255,255,0.5)"/><path d="M52 38 L60 35 C63 34, 65 37, 63 40 L57 48 C55 50, 52 49, 52 47" fill="rgba(255,255,255,0.4)"/></svg>
+                    </div>
+                </div>
+                <div class="menu-card-body">
+                    <h3 class="menu-card-name">קפוצ׳ינו אמיתי</h3>
+                    <p class="menu-card-desc">שליש אספרסו, שליש חלב, שליש קצף. מאוזן מושלם</p>
+                    <div class="menu-card-footer">
+                        <div class="menu-card-price">16<span> ש"ח</span></div>
+                        <button class="menu-card-order"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2C1810" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card card-color-6">
+                <div class="menu-card-image">
+                    <div class="menu-card-image-inner">
+                        <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="30" fill="rgba(255,255,255,0.3)"/><path d="M25 45 C25 30, 40 20, 40 20 C40 20, 55 30, 55 45 C55 55, 48 58, 40 58 C32 58, 25 55, 25 45Z" fill="rgba(255,255,255,0.5)"/></svg>
+                    </div>
+                </div>
+                <div class="menu-card-body">
+                    <h3 class="menu-card-name">V60 פילטר</h3>
+                    <p class="menu-card-desc">חליטה ידנית של פולי אתיופיה בשיטת Pour Over</p>
+                    <div class="menu-card-footer">
+                        <div class="menu-card-price">18<span> ש"ח</span></div>
+                        <button class="menu-card-order"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2C1810" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="experience" id="experience">
+        <div class="experience-inner">
+            <div class="section-header">
+                <span class="section-tag">החוויה</span>
+                <h2 class="section-title">למה Brew & Soul?</h2>
+                <p class="section-subtitle">יותר מקפה, זו חוויה שלמה שמחכה לכם</p>
+            </div>
+            <div class="exp-grid">
+                <div class="exp-card">
+                    <div class="exp-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3 class="exp-title">קלייה במקום</h3>
+                    <p class="exp-text">הפולים נקלים אצלנו במקום, כל שבוע אצווה חדשה. טריות שאי אפשר לזייף.</p>
+                </div>
+                <div class="exp-card">
+                    <div class="exp-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    </div>
+                    <h3 class="exp-title">פתוח עד מאוחר</h3>
+                    <p class="exp-text">עד חצות בימי חול, עד 2:00 בלילה בסופ"ש. תמיד יש לכם לאן לבוא.</p>
+                </div>
+                <div class="exp-card">
+                    <div class="exp-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3 class="exp-title">קהילה חיה</h3>
+                    <p class="exp-text">סדנאות קפה, ערבי טעימות, ומפגשים שבועיים. בואו להיות חלק מהמשפחה.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-header">
+            <span class="section-tag">מה אומרים עלינו</span>
+            <h2 class="section-title">הלקוחות מדברים</h2>
+            <p class="section-subtitle">אלפי לקוחות מרוצים לא יכולים לטעות</p>
+        </div>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-quote">"</div>
+                <div class="testimonial-stars">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#C8A97E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#C8A97E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#C8A97E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#C8A97E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#C8A97E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <p class="testimonial-text">"הקפה הכי טוב בתל אביב, בלי שאלה. האספרסו שלהם שינה לי את הסטנדרט. אני מגיע כל בוקר כבר 3 שנים."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar avatar-1">ד</div>
+                    <div>
+                        <div class="testimonial-name">דניאל כהן</div>
+                        <div class="testimonial-role">מפתח תוכנה</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-quote">"</div>
+                <div class="testimonial-stars">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#C8A97E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#C8A97E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#C8A97E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#C8A97E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#C8A97E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <p class="testimonial-text">"המקום המושלם לעבודה מרחוק. WiFi מעולה, שקעים בכל שולחן, והצוות תמיד מחייך. כאילו הסלון השני שלי."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar avatar-2">מ</div>
+                    <div>
+                        <div class="testimonial-name">מיכל לוי</div>
+                        <div class="testimonial-role">מעצבת גרפית</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-quote">"</div>
+                <div class="testimonial-stars">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#C8A97E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#C8A97E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#C8A97E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#C8A97E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#C8A97E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <p class="testimonial-text">"סדנת הקפה שלהם פתחה לי עולם חדש. עכשיו אני מבינה את ההבדל בין פולים ושיטות חליטה. ממליצה בחום!"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar avatar-3">ש</div>
+                    <div>
+                        <div class="testimonial-name">שירה אברהם</div>
+                        <div class="testimonial-role">עורכת דין</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="cta">
+        <div class="cta-bg-pattern"></div>
+        <div class="cta-content">
+            <h2 class="cta-title">מוכנים לחוויה<br>שלא תשכחו?</h2>
+            <p class="cta-text">השאירו פרטים ונשמור לכם מקום. אפשר גם פשוט להגיע, אבל אנחנו אוהבים שיש לכם שולחן מחכה.</p>
+            <form class="cta-form" onsubmit="event.preventDefault()">
+                <input type="tel" class="cta-input" placeholder="מספר טלפון" dir="ltr">
+                <button type="submit" class="cta-submit">שמרו לי מקום</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div>
+                <div class="footer-brand">Brew & Soul</div>
+                <p class="footer-desc">קפה בוטיק בלב תל אביב. קלייה מקומית, אווירה ייחודית, וקפה שלא תמצאו במקום אחר.</p>
+            </div>
+            <div>
+                <div class="footer-title">ניווט</div>
+                <ul class="footer-links">
+                    <li><a href="#about">הסיפור שלנו</a></li>
+                    <li><a href="#menu">תפריט</a></li>
+                    <li><a href="#experience">חוויה</a></li>
+                    <li><a href="#testimonials">לקוחות</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="footer-title">שעות פתיחה</div>
+                <ul class="footer-links">
+                    <li><a href="#">א׳ — ה׳: 07:00 — 00:00</a></li>
+                    <li><a href="#">ו׳: 07:00 — 15:00</a></li>
+                    <li><a href="#">מוצ"ש: 20:00 — 02:00</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="footer-title">יצירת קשר</div>
+                <ul class="footer-links">
+                    <li><a href="#">דיזנגוף 99, תל אביב</a></li>
+                    <li><a href="tel:03-1234567" dir="ltr">03-123-4567</a></li>
+                    <li><a href="mailto:hello@brewandsoul.co.il">hello@brewandsoul.co.il</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span class="footer-copy">&copy; 2026 Brew & Soul. כל הזכויות שמורות.</span>
+            <div class="footer-socials">
+                <div class="footer-social">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </div>
+                <div class="footer-social">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                </div>
+                <div class="footer-social">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="1.5"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const mm = gsap.matchMedia();
+
+        mm.add("(prefers-reduced-motion: no-preference)", () => {
+
+            // === HERO ENTRANCE TIMELINE ===
+            const heroTl = gsap.timeline({ defaults: { duration: 0.9, ease: "power3.out" } });
+            heroTl
+                .from(".hero-badge", { y: 30, autoAlpha: 0, duration: 0.6 })
+                .from(".hero-title", { y: 60, autoAlpha: 0 }, "-=0.4")
+                .from(".hero-subtitle", { y: 40, autoAlpha: 0 }, "-=0.5")
+                .from(".hero-buttons .btn-primary", { y: 30, autoAlpha: 0, scale: 0.95 }, "-=0.4")
+                .from(".hero-buttons .btn-secondary", { y: 30, autoAlpha: 0, scale: 0.95 }, "-=0.3")
+                .from(".hero-scroll", { autoAlpha: 0, y: 20 }, "-=0.2");
+
+            // === HERO PARTICLES ===
+            const particleContainer = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                p.style.width = (2 + Math.random() * 4) + 'px';
+                p.style.height = p.style.width;
+                particleContainer.appendChild(p);
+
+                gsap.to(p, {
+                    y: -150 - Math.random() * 200,
+                    x: (Math.random() - 0.5) * 100,
+                    opacity: 0.4 + Math.random() * 0.4,
+                    duration: 4 + Math.random() * 6,
+                    repeat: -1,
+                    delay: Math.random() * 5,
+                    ease: "none"
+                });
+            }
+
+            // === SCROLL LINE ANIMATION ===
+            gsap.to(".scroll-line", {
+                scaleY: 0,
+                transformOrigin: "bottom",
+                duration: 1.2,
+                repeat: -1,
+                yoyo: true,
+                ease: "power2.inOut"
+            });
+
+            // === NAV SCROLL EFFECT ===
+            ScrollTrigger.create({
+                start: "top -80",
+                onUpdate: (self) => {
+                    document.getElementById('nav').classList.toggle('scrolled', self.progress > 0);
+                }
+            });
+
+            // === ABOUT SECTION ===
+            const aboutTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".about",
+                    start: "top 75%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+            aboutTl
+                .from(".about-image", { x: -80, autoAlpha: 0, duration: 1, ease: "power2.out" })
+                .from(".about-float-card", { y: 40, autoAlpha: 0, scale: 0.9, duration: 0.6 }, "-=0.4")
+                .from(".about-tag", { y: 20, autoAlpha: 0, duration: 0.5 }, "-=0.6")
+                .from(".about-title", { y: 40, autoAlpha: 0, duration: 0.7 }, "-=0.4")
+                .from(".about-text", { y: 30, autoAlpha: 0, duration: 0.6 }, "-=0.3")
+                .from(".about-feature", {
+                    y: 20, autoAlpha: 0, duration: 0.5,
+                    stagger: 0.1
+                }, "-=0.3");
+
+            // === STATS COUNTER ANIMATION ===
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.dataset.target);
+                gsap.to(counter, {
+                    textContent: target,
+                    duration: 2.5,
+                    ease: "power1.out",
+                    snap: { textContent: 1 },
+                    scrollTrigger: {
+                        trigger: ".stats",
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    onUpdate: function() {
+                        const val = Math.round(parseFloat(counter.textContent));
+                        counter.textContent = val >= 1000 ? val.toLocaleString() : val;
+                    }
+                });
+            });
+
+            gsap.from(".stat-item", {
+                y: 40, autoAlpha: 0, duration: 0.7,
+                stagger: 0.15,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: ".stats",
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+            // === MENU SECTION ===
+            gsap.from(".menu .section-header > *", {
+                y: 30, autoAlpha: 0, duration: 0.6,
+                stagger: 0.12,
+                scrollTrigger: {
+                    trigger: ".menu",
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+            ScrollTrigger.batch(".menu-card", {
+                onEnter: (batch) => gsap.from(batch, {
+                    y: 60, autoAlpha: 0, duration: 0.7,
+                    stagger: 0.12,
+                    ease: "back.out(1.4)",
+                    overwrite: true
+                }),
+                start: "top 85%"
+            });
+
+            // === EXPERIENCE CARDS ===
+            gsap.from(".experience .section-header > *", {
+                y: 30, autoAlpha: 0, duration: 0.6,
+                stagger: 0.12,
+                scrollTrigger: {
+                    trigger: ".experience",
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+            gsap.from(".exp-card", {
+                y: 50, autoAlpha: 0, duration: 0.7,
+                stagger: 0.15,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: ".exp-grid",
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+            // === TESTIMONIALS ===
+            gsap.from(".testimonials .section-header > *", {
+                y: 30, autoAlpha: 0, duration: 0.6,
+                stagger: 0.12,
+                scrollTrigger: {
+                    trigger: ".testimonials",
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+            gsap.from(".testimonial-card", {
+                y: 50, autoAlpha: 0, duration: 0.7,
+                stagger: { amount: 0.4, from: "center" },
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: ".testimonial-grid",
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+            // === CTA SECTION ===
+            const ctaTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".cta",
+                    start: "top 75%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+            ctaTl
+                .from(".cta-title", { y: 50, autoAlpha: 0, duration: 0.8, ease: "power3.out" })
+                .from(".cta-text", { y: 30, autoAlpha: 0, duration: 0.6 }, "-=0.4")
+                .from(".cta-form", { y: 30, autoAlpha: 0, scale: 0.98, duration: 0.6 }, "-=0.3");
+
+            // === PARALLAX on hero bg ===
+            gsap.to(".hero-bg", {
+                y: 100,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".hero",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
+
+            // === FOOTER ===
+            gsap.from(".footer-inner > div", {
+                y: 30, autoAlpha: 0, duration: 0.6,
+                stagger: 0.1,
+                scrollTrigger: {
+                    trigger: ".footer",
+                    start: "top 90%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+        });
+
+        // Reduced motion: instant display, no animations
+        mm.add("(prefers-reduced-motion: reduce)", () => {
+            gsap.globalTimeline.timeScale(0);
+            ScrollTrigger.getAll().forEach(st => st.kill());
+        });
+    </script>
+</body>
+</html>
